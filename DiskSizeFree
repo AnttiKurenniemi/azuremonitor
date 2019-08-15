@@ -1,0 +1,13 @@
+// Displays free disk space over the past day, in 30 minute intervals, for all disk drives
+// Free size is shown in gigabytes
+let containerNames = Perf 
+| where ObjectName == "LogicalDisk" 
+| where CounterName == "Free Megabytes"
+| where InstanceName endswith(":")
+| distinct InstanceName;
+Perf
+| where TimeGenerated > ago(1d)
+| where InstanceName in (containerNames)
+| where CounterName == "Free Megabytes"
+| summarize avg(CounterValue / 1024) by InstanceName, bin(TimeGenerated, 30m)
+| render timechart 
