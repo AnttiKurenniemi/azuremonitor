@@ -1,2 +1,2 @@
-# azuremonitor
-Azure Monitor related scripts and queries
+# Azuremonitor
+This repository contains some handy queries for Azure Monitor; things that I've found useful myself.
